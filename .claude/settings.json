@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run dev)",
+      "Bash(npm run build)",
+      "Bash(npm install)",
+      "Bash(npm run lint)",
+      "Bash(npx prisma migrate dev*)",
+      "Bash(npx prisma studio)",
+      "Bash(node prisma/seed.js)",
+      "Bash(npx prisma generate)",
+      "Bash(git status)",
+      "Bash(git diff*)",
+      "Bash(git log*)",
+      "Bash(git add*)",
+      "Bash(git commit*)",
+      "Bash(curl -s http://localhost:5001/api/*)",
+      "Bash(lsof -ti:3000*)",
+      "Bash(lsof -ti:5001*)"
+    ],
+    "deny": [
+      "Bash(rm -rf /)",
+      "Bash(git push --force*)",
+      "Bash(DROP DATABASE*)"
+    ]
+  },
+  "env": {
+    "BACKEND_URL": "http://localhost:5001",
+    "FRONTEND_URL": "http://localhost:3000"
+  }
+}
