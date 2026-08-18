@@ -89,70 +89,59 @@ A full-stack beauty e-commerce platform inspired by GlamCart. Ships a **Next.js 
 
 ### System Diagram
 
-```
-  ┌──────────────────────┐     ┌──────────────────────┐
-  │   Next.js Web App    │     │   Flutter Mobile App  │
-  │   localhost:3000     │     │   iOS / Android       │
-  │                      │     │                       │
-  │  AuthContext ─────┐  │     │  AuthProvider ─────┐  │
-  │  CartContext ─────┤  │     │  CartProvider ─────┤  │
-  └──────────────┬────┘  │     └───────────────┬────┘  │
-                 │  Axios│                      │  Dio  │
-                 └───────┘                      └───────┘
-                          │   HTTP/JSON   │
-                          └───────┬───────┘
-                                  │
-                    ┌─────────────▼──────────────┐
-                    │     Express REST API        │
-                    │     localhost:5002          │
-                    │                            │
-                    │  ┌──────────────────────┐  │
-                    │  │  JWT Middleware       │  │
-                    │  │  (authenticate)       │  │
-                    │  └──────────────────────┘  │
-                    │                            │
-                    │  Routes: auth, products,   │
-                    │  cart, orders, wishlist,   │
-                    │  users, coupons, payments  │
-                    │                            │
-                    │  Prisma ORM (singleton)    │
-                    └─────────────┬──────────────┘
-                                  │
-                    ┌─────────────▼──────────────┐
-                    │        PostgreSQL           │
-                    │    db: glamcart_latest         │
-                    │                            │
-                    │  11 models: User, Product, │
-                    │  Cart, Order, Coupon, ...  │
-                    └────────────────────────────┘
+```mermaid
+graph TD
+    subgraph "Clients (Frontend Layer)"
+        Web["Next.js Web App (React 18)"] --> WebState["React Context API"]
+        WebState --> WebAxios["Axios (Auto-JWT Interceptor)"]
+        
+        Mobile["Flutter Mobile App"] --> MobileState["Provider (ChangeNotifier)"]
+        MobileState --> MobileDio["Dio (Auto-JWT Interceptor)"]
+    end
+
+    subgraph "Backend API (Node.js + Express)"
+        Router["Express Router (/api)"] --> Middleware["Auth / Validation Middleware"]
+        Middleware --> Routes["Route Controllers (Auth, Products, Cart, Orders, etc.)"]
+        Routes --> PrismaDB["Prisma ORM (db.js singleton)"]
+    end
+
+    subgraph "Infrastructure & Data"
+        DB[("PostgreSQL 15+")]
+        Razorpay["Razorpay Payment Gateway"]
+        Nodemailer["Nodemailer (Email Service)"]
+    end
+
+    WebAxios -.->|HTTP REST / JSON| Router
+    MobileDio -.->|HTTP REST / JSON| Router
+    
+    PrismaDB --> DB
+    Routes -.-> Razorpay
+    Routes -.-> Nodemailer
 ```
 
 ### Authentication Flow
 
-```
-  Client                  API                   DB
-    │                      │                     │
-    │  POST /auth/login     │                     │
-    │  { email, password }  │                     │
-    │──────────────────────►│                     │
-    │                       │  findUnique(email)  │
-    │                       │────────────────────►│
-    │                       │◄────────────────────│
-    │                       │  bcrypt.compare()   │
-    │  { user, token }      │                     │
-    │◄──────────────────────│                     │
-    │                       │                     │
-    │  (store token in      │                     │
-    │   localStorage /      │                     │
-    │   SharedPreferences)  │                     │
-    │                       │                     │
-    │  GET /cart            │                     │
-    │  Authorization: Bearer│                     │
-    │──────────────────────►│                     │
-    │                       │  jwt.verify()       │
-    │                       │  → req.user.id      │
-    │  [cart items]         │                     │
-    │◄──────────────────────│                     │
+```mermaid
+sequenceDiagram
+    participant Client as Web / Mobile Client
+    participant API as Express Backend
+    participant DB as PostgreSQL (Prisma)
+
+    Client->>API: POST /auth/login { email, password }
+    API->>DB: findUnique(email)
+    DB-->>API: User record (with hashed password)
+    API->>API: bcrypt.compare(password, hash)
+    API-->>Client: { user, token }
+    
+    Note over Client: Stores token (localStorage / SharedPreferences)
+    
+    Client->>API: GET /cart (Authorization: Bearer <token>)
+    API->>API: jwt.verify() & attach req.user.id
+    API->>DB: fetch CartItems
+    DB-->>API: [cart items]
+    API-->>Client: 200 OK + Data
+    
+    Note over Client,API: Interceptor auto-removes token on 401 Unauthorized
 ```
 
 ### Key Design Decisions
