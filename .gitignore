@@ -1,23 +1,107 @@
 # Dependencies
 node_modules/
+jspm_packages/
 
 # Build outputs
 .next/
+out/
 dist/
 build/
+build/Release
+.output/
+.nuxt/
+.parcel-cache/
+.vite/
 
-# Claude Code — personal overrides (never commit these)
-CLAUDE.local.md
-.claude/settings.local.json
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Test / coverage
+coverage/
+*.lcov
+.nyc_output/
+lib-cov/
+
+# Tool caches
+.grunt/
+.cache/
+.parcel-cache/
+.temp/
+.svelte-kit/
+.vuepress/dist/
+.vuepress/cache/
+.docusaurus/
+.serverless/
+.fusebox/
+.dynamodb/
+.firebase/
+.tern-port
+.vscode-test
+.pnpm-store/
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# TypeScript / JS caches
+*.tsbuildinfo
+.npm/
+.eslintcache
+.stylelintcache
+.node_repl_history
+
+# Package output
+*.tgz
+.yarn-integrity
+
+# Env files
+.env
+.env.*
+!.env.example
+.env.local
+.env.production
+
+# Framework-specific outputs
+.next/
+out/
+.nuxt/
+dist/
+.output/
+
+# Gatsby / Vue / Vite / others
+.cache/
+# Comment in the public line in if your project uses Gatsby and not Next.js
+# https://nextjs.org/blog/next-9-1#public-directory-support
+# public
+.vuepress/dist/
+.temp/
+.svelte-kit/
+**/.vitepress/dist/
+**/.vitepress/cache/
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
 
 # OS
 .DS_Store
 
-# Editor
+# Editor / local overrides
 .vscode/
 .idea/
+CLAUDE.local.md
+.claude/settings.local.json
 
-# Environment files
-.env
-.env.local
-.env.production
