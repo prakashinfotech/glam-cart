@@ -1,4 +1,6 @@
-# GlamCart — Beauty & Cosmetics E-Commerce Platform
+![GlamCart Hero Banner](docs/assets/glamcart_hero_banner.jpg)
+
+# 💄 GlamCart — Beauty & Cosmetics E-Commerce Platform
 
 ![Next.js](https://img.shields.io/badge/Next.js-14-black?logo=next.js)
 ![Node.js](https://img.shields.io/badge/Node.js-18%2B-green?logo=node.js)
