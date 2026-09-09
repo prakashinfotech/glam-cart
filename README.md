@@ -2,34 +2,68 @@
 
 # 💄 GlamCart — Beauty & Cosmetics E-Commerce Platform
 
-![Next.js](https://img.shields.io/badge/Next.js-14-black?logo=next.js)
-![Node.js](https://img.shields.io/badge/Node.js-18%2B-green?logo=node.js)
-![Flutter](https://img.shields.io/badge/Flutter-3.x-blue?logo=flutter)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-blue?logo=postgresql)
-![Prisma](https://img.shields.io/badge/Prisma-5-2D3748?logo=prisma)
-![Razorpay](https://img.shields.io/badge/Razorpay-Test_Mode-3395FF)
+**Discover, Glamourise, and Elevate Your Beauty Rituals.**
 
-A full-stack beauty e-commerce platform inspired by GlamCart. Ships a **Next.js web app**, a **Node.js REST API**, and a **Flutter mobile app** — all sharing the same PostgreSQL database via Prisma ORM.
+GlamCart — a modern, high-performance beauty and personal care e-commerce platform designed for India. Delivers an omnichannel shopping experience across web and mobile — offering authentic cosmetics, shade and variant discovery, intelligent coupon redemption, real-time cart synchronization, and frictionless multi-step checkout. Built by Prakash Software Solutions (PSSPL) with Next.js 14, React 18, Flutter 3.x, Node.js, Express, PostgreSQL & Prisma ORM.
+
+**Website:** [https://www.prakashinfotech.com](https://www.prakashinfotech.com)
+
+[![Next.js](https://img.shields.io/badge/Next.js-14-black?logo=next.js)](https://nextjs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-18%2B-green?logo=node.js)](https://nodejs.org/)
+[![Flutter](https://img.shields.io/badge/Flutter-3.x-blue?logo=flutter)](https://flutter.dev/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-blue?logo=postgresql)](https://www.postgresql.org/)
+[![Prisma](https://img.shields.io/badge/Prisma-5-2D3748?logo=prisma)](https://www.prisma.io/)
+[![Razorpay](https://img.shields.io/badge/Razorpay-Test_Mode-3395FF)](https://razorpay.com/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.x-38B2AC?logo=tailwind-css)](https://tailwindcss.com/)
+
+---
+
+## The Problem
+
+Online beauty and cosmetics shopping in India is hindered by fragmented product catalogs, inconsistent cross-device experiences, and high checkout drop-offs. Customers struggle with complex variant and shade matching across hundreds of SKUs, lose saved items and carts when switching between desktop and mobile devices, and encounter opaque coupon discount rules. Furthermore, traditional e-commerce backends often suffer from database race conditions, duplicate cart entries, and price drift where retroactive product updates distort past order histories.
+
+## The Solution
+
+GlamCart provides a unified, omnichannel e-commerce ecosystem designed specifically for beauty retail:
+- **Unified Omnichannel Architecture**: A single Node.js & Express REST API powered by Prisma ORM and PostgreSQL 16 synchronizes catalog, cart, wishlist, and order states in real-time across both Next.js 14 Web and Flutter 3.x Mobile applications.
+- **Frictionless Beauty Discovery**: Multi-faceted filtering (categories, brands, price range, ratings, skin concerns, bestsellers) paired with rich product galleries, variant selectors, and verified customer reviews.
+- **Resilient Cart & Smart Coupon Engine**: Atomic cart operations using composite upsert constraints (`userId_productId`) to eliminate race conditions, alongside a robust promo engine validating percentage (capped) and flat discounts with minimum order thresholds.
+- **Streamlined 3-Step Checkout & Flexible Payments**: Integrated address book management, instant Razorpay payment gateway integration (UPI, Credit/Debit cards, Net Banking) with HMAC signature verification, and Cash on Delivery fallback.
+- **Data Integrity & Enterprise Security**: Immutable point-in-time pricing snapshots on order items, JWT-based authentication with 7-day token rotation, and comprehensive role-based access control (RBAC).
 
 ---
 
 ## Table of Contents
 
-1. [Features](#features)
-2. [Tech Stack](#tech-stack)
-3. [Architecture](#architecture)
-4. [Folder Structure](#folder-structure)
-5. [Setup](#setup)
-6. [Available Scripts](#available-scripts)
-7. [API Reference](#api-reference)
-8. [Demo Credentials & Coupons](#demo-credentials--coupons)
-9. [Database Models](#database-models)
-10. [Validation Rules](#validation-rules)
-11. [Known Limitations](#known-limitations)
+1. [The Problem](#the-problem)
+2. [The Solution](#the-solution)
+3. [Features](#features)
+4. [Tech Stack](#tech-stack)
+5. [Architecture](#architecture)
+6. [Folder Structure](#folder-structure)
+7. [Setup](#setup)
+8. [Available Scripts](#available-scripts)
+9. [API Reference](#api-reference)
+10. [Demo Credentials & Coupons](#demo-credentials--coupons)
+11. [Database Models](#database-models)
+12. [Validation Rules](#validation-rules)
+13. [Known Limitations](#known-limitations)
 
 ---
 
 ## Features
+
+| Category | Details |
+|---|---|
+| **Product Discovery** | Filter by category tree, brand, price range, ratings, and bestsellers with instant search |
+| **Product Detail & Variants** | Interactive image gallery, shade/size selectors, stock tracking, and customer reviews |
+| **Omnichannel Sync** | Shared cart and wishlist state across Next.js Web and Flutter Mobile with auto-JWT interceptors |
+| **Promotions & Coupons** | Multi-tiered coupon engine with percentage/flat discounts, min-order thresholds, and one-tap apply |
+| **Checkout & Payments** | 3-step checkout with address selection, Razorpay (UPI, Cards, Net Banking) with HMAC verification & COD |
+| **Order Management** | Complete order lifecycle tracking (Pending → Confirmed → Shipped → Delivered) with immutable pricing |
+| **User Profile & Security** | JWT authentication (7-day tokens), bcrypt password hashing, address book, and profile editing |
+| **Admin Controls** | Role-based dashboard for managing products, categories, coupons, orders, and customer accounts |
+| **Cross-Platform Mobile** | Native Flutter 3.x app with Dio interceptors, auto-login from saved token, and fluid navigation |
 
 ### Web (Next.js)
 

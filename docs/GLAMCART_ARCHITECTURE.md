@@ -5,7 +5,22 @@
 [![Mobile App](https://img.shields.io/badge/Mobile-Flutter-02569B)](glamcart_flutter)
 [![Database](https://img.shields.io/badge/Database-PostgreSQL_%2B_Prisma-336791)](backend/prisma)
 
-GlamCart is a multi-platform e-commerce application. It features a unified Node.js REST API providing data to both a Next.js (React) web storefront and a Flutter mobile application. The backend uses Prisma ORM to interact with a PostgreSQL database, managing users, products, cart operations, orders, and payments.
+GlamCart is an omnichannel e-commerce ecosystem designed for the beauty and cosmetics retail domain. It features a unified Node.js REST API providing shared data and synchronized business logic to both a Next.js 14 (React 18) web storefront and a Flutter 3.x cross-platform mobile application. The backend uses Prisma ORM to interact with a PostgreSQL 16 database, managing users, hierarchical catalogs, real-time cart operations, coupon promotions, orders, and payments.
+
+---
+
+## 🎯 The Problem & Architectural Solution
+
+### The Problem
+- **Cross-Device State Inconsistency**: In beauty retail, users browse on mobile and purchase on desktop (or vice versa). Fragmented architectures lead to out-of-sync carts, loss of applied promotional coupons, and authentication drift.
+- **Race Conditions & Catalog Concurrency**: High-frequency cart modifications during flash sales frequently cause duplicate cart records and inventory race conditions.
+- **Historical Price Drift**: Changes to product catalogs or discounts can erroneously overwrite historical order amounts if order lines do not capture point-in-time pricing snapshots.
+
+### The Architectural Solution
+- **Unified Single-Source-of-Truth API**: Centralized Express REST API with automated JWT interceptors ensures identical state and validation rules across Web and Mobile clients.
+- **Atomic Cart Operations**: Composite unique indexing `[userId, productId]` at the database layer powers conflict-free upserts for cart item updates.
+- **Point-in-Time Snapshotting**: The `OrderItem` model freezes product prices, shades, and variant metadata at checkout time to guarantee immutable historical accounting.
+- **Idempotent Payment Verification**: Razorpay integration leverages server-side HMAC-SHA256 signature verification before order confirmation, preventing fraudulent order creation.
 
 ---
 
