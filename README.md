@@ -38,16 +38,24 @@ GlamCart provides a unified, omnichannel e-commerce ecosystem designed specifica
 1. [The Problem](#the-problem)
 2. [The Solution](#the-solution)
 3. [Features](#features)
-4. [Tech Stack](#tech-stack)
-5. [Architecture](#architecture)
-6. [Folder Structure](#folder-structure)
-7. [Setup](#setup)
-8. [Available Scripts](#available-scripts)
-9. [API Reference](#api-reference)
-10. [Demo Credentials & Coupons](#demo-credentials--coupons)
-11. [Database Models](#database-models)
-12. [Validation Rules](#validation-rules)
-13. [Known Limitations](#known-limitations)
+4. [Project Preview](#project-preview)
+5. [Tech Stack](#tech-stack)
+6. [Architecture](#architecture)
+7. [Folder Structure](#folder-structure)
+8. [Setup](#setup)
+9. [Available Scripts](#available-scripts)
+10. [API Reference](#api-reference)
+11. [Demo Credentials & Coupons](#demo-credentials--coupons)
+12. [Database Models](#database-models)
+13. [Validation Rules](#validation-rules)
+14. [Known Limitations](#known-limitations)
+15. [Design System & Theme Colors](#design-system--theme-colors)
+16. [Security](#security)
+17. [Optional Deployment](#optional-deployment)
+18. [Contributing](#contributing)
+19. [License](#license)
+20. [About PSSPL](#about-psspl)
+21. [Contact](#contact)
 
 ---
 
@@ -101,6 +109,18 @@ GlamCart provides a unified, omnichannel e-commerce ecosystem designed specifica
 - Coupon validation: PERCENT (capped) and FLAT discounts, with min-order, usage limits, expiry
 - Razorpay order creation and HMAC signature verification
 - Colour-coded request logger (green/yellow/red by status code)
+
+---
+
+## Project Preview
+
+![GlamCart Homepage and Category Discovery](docs/assets/glamcart_home_preview.png)
+
+_Homepage with hero carousel, category navigation, promotional discount banner, and instant search._
+
+![GlamCart Product Catalog and Filtering](docs/assets/glamcart_products_preview.png)
+
+_Product discovery with dynamic category filters, price range slider, quick filters (Featured & Bestsellers), and sorting._
 
 ---
 
@@ -591,6 +611,8 @@ Enforced on both frontend (form) and backend (route handler):
 
 ---
 
+## Design System & Theme Colors
+
 | Token                 | Hex       | Usage                           |
 | --------------------- | --------- | ------------------------------- |
 | `glamcart-pink`       | `#fc2779` | Buttons, active states, badges  |
@@ -598,3 +620,65 @@ Enforced on both frontend (form) and backend (route handler):
 | `glamcart-gray`       | `#6b7280` | Subtext, placeholders           |
 | `glamcart-light-gray` | `#f9fafb` | Page backgrounds, section fills |
 | `glamcart-border`     | `#e5e7eb` | Card borders, dividers          |
+
+---
+
+## Security
+
+- **Authentication & Authorization:** JWT bearer tokens (7-day lifecycle), salted password hashing via bcryptjs, and strict Role-Based Access Control (`USER` and `ADMIN` roles).
+- **Data Access & Injection Defense:** All database mutations and queries execute through Prisma ORM with parameterized queries and prepared statements to prevent SQL injection.
+- **Payment Integrity:** Razorpay payment and webhook verification enforces server-side HMAC-SHA256 signature verification before order confirmation, preventing payment tampering or forged orders.
+- **Secrets Management:** No production secrets or live payment credentials are committed. Backend and frontend utilize `.env.example` templates; all `.env` and `.env.local` files are git-ignored.
+- **Reporting:** To report a vulnerability or security concern, please contact our security team at `info@prakashinfotech.com` rather than opening a public issue.
+
+Built and maintained by **Prakash Software Solutions Pvt. Ltd. (PSSPL)**. This repository contains no production credentials; all example values and demo accounts are intended for local development only and must be replaced or disabled before production deployment.
+
+---
+
+## Optional Deployment
+
+This showcase repository has **no active GitHub Actions automated deployment workflow**, so normal pushes do not deploy the application or require cloud secrets.
+
+For teams looking to deploy to cloud infrastructure:
+
+1. **Web Frontend (Next.js)**: Deploy `frontend/` to **Vercel** or **AWS Amplify** with environment variable `NEXT_PUBLIC_API_URL`.
+2. **Backend API (Node.js/Express)**: Deploy `backend/` to **Render**, **Railway**, **AWS ECS**, or **DigitalOcean App Platform** with Node.js 18+ runtime.
+3. **Database (PostgreSQL)**: Provision a managed PostgreSQL instance on **Supabase**, **AWS RDS**, or **Neon**, and set `DATABASE_URL`.
+4. **Mobile App (Flutter)**: Build release artifacts via `flutter build apk --release` (Android) and `flutter build ipa` (iOS / TestFlight).
+5. Configure production JWT secrets, CORS origin whitelists, and live Razorpay API keys in respective hosting environment dashboards.
+
+---
+
+## Contributing
+
+Contributions are welcome. Please read our guidelines and ensure quality checks, linting, and tests pass before submitting pull requests.
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'feat: add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+---
+
+## License
+
+Licensed under the [MIT License](LICENSE). © 2026 Prakash Software Solutions Pvt. Ltd.
+
+---
+
+## About PSSPL
+
+**Prakash Software Solutions Pvt. Ltd. (PSSPL)** is an enterprise AI and software engineering company with 26+ years of experience, delivering high-impact solutions across Artificial Intelligence, Generative AI, Cloud Engineering (Azure/AWS), Data & AI, and modern omnichannel application development (React, Next.js, Node.js, Flutter, .NET, Cloud). GlamCart is one of our engineering showcases, demonstrating end-to-end full-stack retail and e-commerce product engineering.
+
+---
+
+## 📬 Contact
+
+- 🌐 **Website:** [www.prakashinfotech.com](https://www.prakashinfotech.com)
+- 💼 **LinkedIn:** [Prakash Software Solutions](https://www.linkedin.com/company/prakash-software-solutions-pvt-ltd)
+- ✉️ **Email:** info@prakashinfotech.com
+
+---
+
+**Built with 💖 for the Indian beauty & e-commerce market by [Prakash Software Solutions (PSSPL)](https://www.prakashinfotech.com)**
