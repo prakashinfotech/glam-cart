@@ -1,0 +1,27 @@
+# Reference template only. Files under docs/ are not executed by GitHub Actions.
+# Copy this file to .github/workflows/deploy.yml only after configuring both
+# repository secrets and confirming that deployment is desired.
+
+name: Deploy GlamCart
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger Render backend deployment
+        env:
+          RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
+        run: |
+          test -n "$RENDER_DEPLOY_HOOK"
+          curl --fail --show-error --silent -X POST "$RENDER_DEPLOY_HOOK"
+
+      - name: Trigger Vercel frontend deployment
+        env:
+          VERCEL_DEPLOY_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: |
+          test -n "$VERCEL_DEPLOY_HOOK"
+          curl --fail --show-error --silent -X POST "$VERCEL_DEPLOY_HOOK"

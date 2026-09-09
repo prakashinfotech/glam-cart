@@ -625,37 +625,39 @@ Enforced on both frontend (form) and backend (route handler):
 
 ## Security
 
-- **Authentication & Authorization:** JWT bearer tokens (7-day lifecycle), salted password hashing via bcryptjs, and strict Role-Based Access Control (`USER` and `ADMIN` roles).
-- **Data Access & Injection Defense:** All database mutations and queries execute through Prisma ORM with parameterized queries and prepared statements to prevent SQL injection.
-- **Payment Integrity:** Razorpay payment and webhook verification enforces server-side HMAC-SHA256 signature verification before order confirmation, preventing payment tampering or forged orders.
-- **Secrets Management:** No production secrets or live payment credentials are committed. Backend and frontend utilize `.env.example` templates; all `.env` and `.env.local` files are git-ignored.
-- **Reporting:** To report a vulnerability or security concern, please contact our security team at `info@prakashinfotech.com` rather than opening a public issue.
+- **Authentication:** JWT bearer tokens, salted password hashes (bcryptjs), and role-based access (`USER` / `ADMIN`).
+- **Data access:** All database mutations and queries execute through Prisma ORM with parameterized queries to guard against SQL injection.
+- **Payment integrity:** Razorpay integration enforces server-side HMAC-SHA256 signature verification before order confirmation to prevent payment tampering.
+- **Secrets:** No secrets are committed. Backend and frontend ship with `.env.example` templates; local development uses `.env` / `.env.local`, which are git-ignored.
+- **Reporting:** To report a vulnerability, please follow [SECURITY.md](SECURITY.md) rather than opening a public issue.
 
-Built and maintained by **Prakash Software Solutions Pvt. Ltd. (PSSPL)**. This repository contains no production credentials; all example values and demo accounts are intended for local development only and must be replaced or disabled before production deployment.
+Built and maintained by **Prakash Software Solutions Pvt. Ltd. (PSSPL)**. This repository contains no production credentials; all example values and demo accounts are intended for local development only and must be replaced or disabled before deployment.
 
 ---
 
 ## Optional Deployment
 
-This showcase repository has **no active GitHub Actions automated deployment workflow**, so normal pushes do not deploy the application or require cloud secrets.
+This showcase repository has **no active GitHub Actions deployment workflow**, so normal pushes do not deploy the application or require cloud secrets.
 
-For teams looking to deploy to cloud infrastructure:
+For teams that want deployment later:
 
-1. **Web Frontend (Next.js)**: Deploy `frontend/` to **Vercel** or **AWS Amplify** with environment variable `NEXT_PUBLIC_API_URL`.
-2. **Backend API (Node.js/Express)**: Deploy `backend/` to **Render**, **Railway**, **AWS ECS**, or **DigitalOcean App Platform** with Node.js 18+ runtime.
-3. **Database (PostgreSQL)**: Provision a managed PostgreSQL instance on **Supabase**, **AWS RDS**, or **Neon**, and set `DATABASE_URL`.
-4. **Mobile App (Flutter)**: Build release artifacts via `flutter build apk --release` (Android) and `flutter build ipa` (iOS / TestFlight).
-5. Configure production JWT secrets, CORS origin whitelists, and live Razorpay API keys in respective hosting environment dashboards.
+1. Create a Vercel project for `frontend/`.
+2. Create a Render web service for the backend (`backend/`).
+3. Configure the production database connection (`DATABASE_URL`), JWT secret, and Razorpay credentials in the hosting platforms.
+4. Add `RENDER_DEPLOY_HOOK` and `VERCEL_DEPLOY_HOOK` as GitHub Actions secrets.
+5. Copy [`docs/deploy.example.yml`](docs/deploy.example.yml) into `.github/workflows/deploy.yml` and enable the desired trigger.
+
+The example uses a manual `workflow_dispatch` trigger by default to prevent accidental deployments.
 
 ---
 
 ## Contributing
 
-Contributions are welcome. Please read our guidelines and ensure quality checks, linting, and tests pass before submitting pull requests.
+Contributions are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) for setup, quality checks, and the pull-request process.
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'feat: add amazing feature'`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
@@ -669,15 +671,13 @@ Licensed under the [MIT License](LICENSE). © 2026 Prakash Software Solutions Pv
 
 ## About PSSPL
 
-**Prakash Software Solutions Pvt. Ltd. (PSSPL)** is an enterprise AI and software engineering company with 26+ years of experience, delivering high-impact solutions across Artificial Intelligence, Generative AI, Cloud Engineering (Azure/AWS), Data & AI, and modern omnichannel application development (React, Next.js, Node.js, Flutter, .NET, Cloud). GlamCart is one of our engineering showcases, demonstrating end-to-end full-stack retail and e-commerce product engineering.
-
----
+**Prakash Software Solutions Pvt. Ltd. (PSSPL)** is an enterprise AI and software engineering company with 26+ years of experience, delivering solutions across Artificial Intelligence, Generative AI, Cloud Engineering (Azure/AWS), Data & AI, and enterprise application development (React, Next.js, Node.js, Flutter, .NET, Cloud). GlamCart is one of our engineering showcases, demonstrating end-to-end full-stack retail and e-commerce product engineering.
 
 ## 📬 Contact
 
-- 🌐 **Website:** [www.prakashinfotech.com](https://www.prakashinfotech.com)
-- 💼 **LinkedIn:** [Prakash Software Solutions](https://www.linkedin.com/company/prakash-software-solutions-pvt-ltd)
-- ✉️ **Email:** info@prakashinfotech.com
+- 🌐 Website: [www.prakashinfotech.com](https://www.prakashinfotech.com)
+- 💼 LinkedIn: [Prakash Software Solutions](https://www.linkedin.com/company/prakash-software-solutions-pvt-ltd)
+- ✉️ Email: info@prakashinfotech.com
 
 ---
 
